@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Button, TextInput } from 'react-native';
+import { View, Button, TextInput, Text, ImageBackground } from 'react-native';
 import firebase from 'firebase';
 
 class SecretForm extends Component {
@@ -9,18 +9,34 @@ class SecretForm extends Component {
   }
 
   onSubmitSecret = () => {
-    const textVal = this.state.secretText;
-    firebase.database().ref('/secrets')
-      .push({ value: textVal })
-      .then(() => {
-        console.log('submit secret success');
-        this.setState({ secretText: '' });
-      });
+    let oldCount = 0;
+    firebase.database().ref('/count/value').once('value').then((snapshot) => {
+      oldCount = snapshot.val();
+      console.log(oldCount);
+      firebase.database().ref('/count').set({ value: oldCount + 1 })
+        .then(() => {
+          const textVal = this.state.secretText;
+          firebase.database().ref(`/secrets/${oldCount + 1}`)
+            .push({ value: textVal })
+            .then(() => {
+              console.log('submit secret success');
+              this.setState({ secretText: '' });
+            });
+        });
+    });
   }
 
   render() {
     return (
-      <View>
+      <ImageBackground
+        style={styles.containerStyle}
+        source={require('../images/back1.png')}
+      >
+        <View style={styles.headerStyle}>
+          <Text>a</Text>
+          <Text style={styles.headerTitle}>sbhfbhdf</Text>
+          <Text>b</Text>
+        </View>
         <TextInput
           style={styles.textInputStyle}
           onChangeText={(secretText) => this.setState({ secretText })}
@@ -33,7 +49,7 @@ class SecretForm extends Component {
           color="#52b3d9"
           accessibilityLabel="Submit a secret"
         />
-      </View>
+      </ImageBackground>
     );
   }
 }
@@ -45,7 +61,22 @@ const styles = {
     borderWidth: 1
   },
   containerStyle: {
-    padding: 16
+    flex: 1,
+    position: 'relative',
+    resizeMode: 'cover'
+  },
+  headerStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 8,
+    height: 60,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    elevation: 2,
+    position: 'relative'
+  },
+  headerTitle: {
   }
 };
 

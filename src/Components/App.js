@@ -7,6 +7,7 @@ import {
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import SecretForm from './SecretForm';
+import reducer from '../Store/reducer';
 
 class App extends Component {
 
@@ -24,7 +25,7 @@ class App extends Component {
 
   render() {
     return (
-      <Provider store={createStore}>
+      <Provider store={createStore(reducer)}>
         <View style={styles.container}>
           <SecretForm />
         </View>
