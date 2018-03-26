@@ -1,13 +1,9 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import {
-  StyleSheet,
-  View
-} from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
-import SecretForm from './SecretForm';
 import reducer from '../Store/reducer';
+import Router from './Router';
 
 class App extends Component {
 
@@ -26,25 +22,10 @@ class App extends Component {
   render() {
     return (
       <Provider store={createStore(reducer)}>
-        <View style={styles.container}>
-          <SecretForm />
-        </View>
+        <Router />
       </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    color: '#0000ff'
-  }
-});
 
 export default App;

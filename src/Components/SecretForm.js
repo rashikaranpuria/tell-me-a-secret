@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Button, TextInput, Text, ImageBackground } from 'react-native';
-import firebase from 'firebase';
+import { Actions } from 'react-native-router-flux';
+import { Icon } from 'react-native-elements';
 
 class SecretForm extends Component {
 
@@ -9,21 +10,22 @@ class SecretForm extends Component {
   }
 
   onSubmitSecret = () => {
-    let oldCount = 0;
-    firebase.database().ref('/count/value').once('value').then((snapshot) => {
-      oldCount = snapshot.val();
-      console.log(oldCount);
-      firebase.database().ref('/count').set({ value: oldCount + 1 })
-        .then(() => {
-          const textVal = this.state.secretText;
-          firebase.database().ref(`/secrets/${oldCount + 1}`)
-            .push({ value: textVal })
-            .then(() => {
-              console.log('submit secret success');
-              this.setState({ secretText: '' });
-            });
-        });
-    });
+    // let oldCount = 0;
+    // firebase.database().ref('/count/value').once('value').then((snapshot) => {
+    //   oldCount = snapshot.val();
+    //   console.log(oldCount);
+    //   firebase.database().ref('/count').set({ value: oldCount + 1 })
+    //     .then(() => {
+    //       const textVal = this.state.secretText;
+    //       firebase.database().ref(`/secrets/${oldCount + 1}`)
+    //         .push({ value: textVal })
+    //         .then(() => {
+    //           console.log('submit secret success');
+    //           this.setState({ secretText: '' });
+    //         });
+    //     });
+    // });
+    Actions.secretActivity();
   }
 
   render() {
@@ -35,7 +37,7 @@ class SecretForm extends Component {
         <View style={styles.headerStyle}>
           <Text>a</Text>
           <Text style={styles.headerTitle}>sbhfbhdf</Text>
-          <Text>b</Text>
+            <Icon name='rowing' />
         </View>
         <TextInput
           style={styles.textInputStyle}
