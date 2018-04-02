@@ -59,12 +59,14 @@ class SecretForm extends Component {
               onChangeText={(secretText) => this.setState({ secretText })}
               placeholder="what's your secret"
               value={this.state.secretText}
-              multiLine
+              multiline
+              numberOfLines={4}
             />
             <Button
+              buttonStyle={styles.submitButtonStyle}
               onPress={this.onSubmitSecret.bind(this)}
               title="Submit"
-              color="#52b3d9"
+              color="#a8908a"
               accessibilityLabel="Submit a secret"
             />
           </Card>
@@ -75,13 +77,16 @@ class SecretForm extends Component {
 }
 
 const styles = {
+  submitButtonStyle: {
+    padding: 16,
+    borderRadius: 8,
+    marginTop: 16
+  },
   textInputStyle: {
-    height: 100,
-    borderColor: 'gray',
-    borderWidth: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    margin: 16,
+    textAlignVertical: 'top',
+    padding: 16,
     alignSelf: 'stretch',
+    fontSize: 20
   },
   containerStyle: {
     flex: 1,
@@ -97,12 +102,10 @@ const styles = {
     justifyContent: 'center'
   },
   formContainerStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 16,
+    padding: 0,
     margin: 24,
     borderRadius: 8,
-    width: 400
+    alignSelf: 'stretch'
   }
 };
 
