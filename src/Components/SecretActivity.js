@@ -11,6 +11,10 @@ class SecretActivity extends Component {
   }
 
   componentDidMount() {
+    this.getNewSecret();
+  }
+
+  getNewSecret = () => {
     console.log('sdsnajdandja');
     const min = 1;
     let max = min;
@@ -81,6 +85,20 @@ class SecretActivity extends Component {
             <Text style={styles.mainTextStyle}>{this.state.secretText}</Text>
           </Card>
         </View>
+        <Icon
+          raised
+          reverse
+          name='refresh'
+          reverseColor='#fff'
+          color='#4fc3f7'
+          size={28}
+          containerStyle={{
+            alignSelf: 'flex-end',
+            justifySelf: 'flex-end',
+            margin: 16
+          }}
+          onPress={() => this.getNewSecret()}
+        />
       </ImageBackground>
     );
   }

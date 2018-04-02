@@ -57,17 +57,18 @@ class SecretForm extends Component {
             <TextInput
               style={styles.textInputStyle}
               onChangeText={(secretText) => this.setState({ secretText })}
-              placeholder="what's your secret"
+              placeholder="What's your secret?"
               value={this.state.secretText}
               multiline
               numberOfLines={4}
+              underlineColorAndroid='transparent'
             />
             <Button
               buttonStyle={styles.submitButtonStyle}
               onPress={this.onSubmitSecret.bind(this)}
               title="Submit"
-              color="#a8908a"
-              accessibilityLabel="Submit a secret"
+              color="#4fc3f7"
+              accessibilityLabel="Shshsh..."
             />
           </Card>
         </View>
