@@ -16,7 +16,11 @@ class App extends Component {
       storageBucket: 'tell-me-a-secret.appspot.com',
       messagingSenderId: '1082578733804'
     };
-    firebase.initializeApp(config);
+    if (!firebase.apps.length) {
+      firebase.initializeApp(config);
+    } else {
+      firebase.app();
+    }
   }
 
   render() {
