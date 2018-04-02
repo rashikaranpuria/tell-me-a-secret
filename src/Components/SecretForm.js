@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import { View, Button, TextInput, ImageBackground } from 'react-native';
+import { View, TextInput, ImageBackground } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Header, Card } from 'react-native-elements';
+import { Header, Card, Button } from 'react-native-elements';
 
 class SecretForm extends Component {
 
@@ -66,9 +66,9 @@ class SecretForm extends Component {
             <Button
               buttonStyle={styles.submitButtonStyle}
               onPress={this.onSubmitSecret.bind(this)}
-              title="Submit"
-              color="#4fc3f7"
-              accessibilityLabel="Shshsh..."
+              title="Shshsh..."
+              accessibilityLabel="Submit secret button"
+              containerStyle={{ margin: 0 }}
             />
           </Card>
         </View>
@@ -79,9 +79,11 @@ class SecretForm extends Component {
 
 const styles = {
   submitButtonStyle: {
-    padding: 16,
+    marginLeft: -14,
+    marginRight: -14,
     borderRadius: 8,
-    marginTop: 16
+    backgroundColor: '#4fc3f7',
+    alignSelf: 'stretch'
   },
   textInputStyle: {
     textAlignVertical: 'top',

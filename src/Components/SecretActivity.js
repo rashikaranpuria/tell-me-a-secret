@@ -94,7 +94,6 @@ class SecretActivity extends Component {
           size={28}
           containerStyle={{
             alignSelf: 'flex-end',
-            justifySelf: 'flex-end',
             margin: 16
           }}
           onPress={() => this.getNewSecret()}
