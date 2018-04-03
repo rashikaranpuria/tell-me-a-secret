@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
 import firebase from 'firebase';
-import { View, TextInput, ImageBackground } from 'react-native';
+import { View, TextInput, ImageBackground, ToastAndroid } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Header, Card, Button } from 'react-native-elements';
 
 class SecretForm extends Component {
 
   state = {
-    secretText: ''
+    secretText: '',
+    saveSecretButtonWaiting: false
   }
 
   onSubmitSecret = () => {
+    this.setState({
+      saveSecretButtonWaiting: true
+    });
     let oldCount = 0;
     firebase.database().ref('/count/value').once('value').then((snapshot) => {
       oldCount = snapshot.val();
-      console.log(oldCount);
       firebase.database().ref('/count').set({ value: oldCount + 1 })
         .then(() => {
           const textVal = this.state.secretText;
           firebase.database().ref(`/secrets/${oldCount + 1}`)
             .push({ value: textVal })
             .then(() => {
-              console.log('submit secret success');
-              this.setState({ secretText: '' });
+              this.setState({
+                secretText: '',
+                saveSecretButtonWaiting: false
+              });
+              ToastAndroid.show('Secret saved :)', ToastAndroid.LONG);
             });
         });
     });
@@ -66,7 +72,7 @@ class SecretForm extends Component {
             <Button
               buttonStyle={styles.submitButtonStyle}
               onPress={this.onSubmitSecret.bind(this)}
-              title="Shshsh..."
+              title={this.state.saveSecretButtonWaiting ? 'Saving...' : 'Shshsh...'}
               accessibilityLabel="Submit secret button"
               containerStyle={{ margin: 0 }}
             />

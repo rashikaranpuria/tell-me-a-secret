@@ -1,45 +1,54 @@
 import React, { Component } from 'react';
-import { View, Text, ImageBackground } from 'react-native';
-import { Header, Icon, Card } from 'react-native-elements';
+import { View, Text, ImageBackground, Share } from 'react-native';
+import { Header, Icon, Card, Divider, Button } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import firebase from 'firebase';
 
 class SecretActivity extends Component {
 
   state = {
-    secretText: 'a basic secret'
+    secretText: 'a basic secret',
+    isRefreshDisabled: false
   }
 
   componentDidMount() {
     this.getNewSecret();
   }
 
+  onClickShare = () => {
+    Share.share({
+      message:
+      `Hey did you know, ${this.state.secretText}. \n Find more secrets on Tell me a secret.`,
+      url: 'http://bam.com',
+      title: 'Spicy secret :-P'
+    }, {
+      // Android only:
+      dialogTitle: 'Share this secret',
+    });
+  }
+
   getNewSecret = () => {
-    console.log('sdsnajdandja');
+    this.setState({
+      isRefreshDisabled: true
+    });
     const min = 1;
     let max = min;
     firebase.database().ref('/count/value').on('value', (snapshot) => {
       max = snapshot.val();
       const rand = Math.floor(Math.random() * ((max - min) + 1)) + min;
-      console.log('check this', max, rand);
       firebase.database().ref(`/secrets/${rand}`).on('value', (innerSnapshot) => {
         const secretArray = [];
-        console.log('inner');
-        console.log(innerSnapshot);
         innerSnapshot.forEach((childSnapshot) => {
-          console.log(max, rand);
-          console.log(childSnapshot.val().value);
           secretArray.push(childSnapshot.val().value);
           const min2 = 0;
           let max2 = secretArray.length;
-          console.log('min max innermost', min2, max2);
           if (min2 < max2) {
             max2 -= 1;
-            console.log('min max innermost2', min2, max2);
             const randSecret = Math.floor(Math.random() * ((max2 - min2) + 1)) + min2;
-            console.log(randSecret);
             this.setSecret(secretArray[randSecret]);
-            console.log(`secret ${secretArray[randSecret]}`);
+            this.setState({
+              isRefreshDisabled: false
+            });
           }
         });
       });
@@ -83,6 +92,15 @@ class SecretActivity extends Component {
         <View style={styles.mainContainerStyle}>
           <Card containerStyle={styles.textContainerStyle}>
             <Text style={styles.mainTextStyle}>{this.state.secretText}</Text>
+            <Divider style={{ backgroundColor: '#f2f2f2', alignSelf: 'stretch' }} />
+            <Button
+              color='#4fc3f7'
+              buttonStyle={styles.shareButtonStyle}
+              titleStyle={{ fontSize: 14, color: '#4fc3f7', fontStyle: 'bold' }}
+              onPress={() => this.onClickShare()}
+              title='SHARE'
+              accessibilityLabel="Share secret button"
+            />
           </Card>
         </View>
         <Icon
@@ -97,6 +115,7 @@ class SecretActivity extends Component {
             margin: 16
           }}
           onPress={() => this.getNewSecret()}
+          disabled={this.state.isRefreshDisabled}
         />
       </ImageBackground>
     );
@@ -104,6 +123,11 @@ class SecretActivity extends Component {
 }
 
 const styles = {
+  shareButtonStyle: {
+    backgroundColor: '#ffffff',
+    alignSelf: 'flex-end',
+    marginTop: 8
+  },
   containerStyle: {
     flex: 1,
     position: 'relative'
@@ -113,11 +137,14 @@ const styles = {
     height: 56
   },
   textContainerStyle: {
-    alignItems: 'center',
+    display: 'flex',
+    alignItems: 'stretch',
     justifyContent: 'center',
     padding: 16,
+    paddingBottom: 8,
     margin: 24,
-    borderRadius: 8
+    borderRadius: 8,
+    alignSelf: 'stretch'
   },
   mainContainerStyle: {
     flex: 1,
@@ -130,7 +157,8 @@ const styles = {
     flexWrap: 'wrap',
     margin: 24,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignSelf: 'stretch'
   }
 };
 
