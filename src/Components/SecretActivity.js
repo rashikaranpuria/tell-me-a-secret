@@ -7,7 +7,7 @@ import firebase from 'firebase';
 class SecretActivity extends Component {
 
   state = {
-    secretText: 'a basic secret',
+    secretText: 'I pester my little sister a lot. But I secretly love her.',
     isRefreshDisabled: false
   }
 
@@ -18,9 +18,8 @@ class SecretActivity extends Component {
   onClickShare = () => {
     Share.share({
       message:
-      `Hey did you know, ${this.state.secretText}. \n Find more secrets on Tell me a secret.`,
-      url: 'http://bam.com',
-      title: 'Spicy secret :-P'
+      `Hey did you know this secret 😲, "${this.state.secretText}". \n Find more secrets on Tell me a secret 😉. Download app at https://play.google.com/store/apps/details?id=com.tellmeasecret`,
+      title: 'Spicy secret 😲'
     }, {
       // Android only:
       dialogTitle: 'Share this secret',

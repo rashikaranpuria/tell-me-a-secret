@@ -39,7 +39,7 @@ const InfoActivity = () => (
           backgroundColor: '#003087',
           borderRadius: 8
         }}
-        onPress={() => { Linking.openURL('https://www.paypal.me/rashikaranpuria'); }}
+        onPress={() => { Linking.openURL('https://www.paypal.me/rashikaranpuria/1'); }}
       />
     </View>
   );
