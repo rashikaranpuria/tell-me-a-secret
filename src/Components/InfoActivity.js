@@ -17,7 +17,7 @@ const InfoActivity = () => (
           alignSelf: 'center'
         }}
       >
-        Because some things should exist :D
+        Because some things should exist 😂
       </Text>
       <SocialIcon
         title="Let's talk"

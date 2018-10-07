@@ -18,7 +18,7 @@ class SecretActivity extends Component {
   onClickShare = () => {
     Share.share({
       message:
-      `Hey did you know this secret 😲, "${this.state.secretText}". \n Find more secrets on Tell me a secret 😉. Download app at https://play.google.com/store/apps/details?id=com.tellmeasecret`,
+      `Hey did you know that, "${this.state.secretText}". \n Find more secrets on Tell me a secret 😉. Download app at https://play.google.com/store/apps/details?id=com.tellmeasecret`,
       title: 'Spicy secret 😲'
     }, {
       // Android only:

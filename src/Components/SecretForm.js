@@ -12,6 +12,10 @@ class SecretForm extends Component {
   }
 
   onSubmitSecret = () => {
+    if (this.state.secretText == '' || this.state.secretText.trim() == '') {
+      ToastAndroid.show('Everybody has secrets. Don\'t be shy. Type something :p', ToastAndroid.LONG);
+      return
+    }
     this.setState({
       saveSecretButtonWaiting: true
     });
@@ -20,7 +24,7 @@ class SecretForm extends Component {
       oldCount = snapshot.val();
       firebase.database().ref('/count').set({ value: oldCount + 1 })
         .then(() => {
-          const textVal = this.state.secretText;
+          const textVal = this.state.secretText.trim();
           firebase.database().ref(`/secrets/${oldCount + 1}`)
             .push({ value: textVal })
             .then(() => {
@@ -28,7 +32,7 @@ class SecretForm extends Component {
                 secretText: '',
                 saveSecretButtonWaiting: false
               });
-              ToastAndroid.show('Secret saved :)', ToastAndroid.LONG);
+              ToastAndroid.show('Your secret is safe with us :)', ToastAndroid.LONG);
             });
         });
     });
