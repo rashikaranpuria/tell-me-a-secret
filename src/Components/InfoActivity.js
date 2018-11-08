@@ -30,16 +30,15 @@ const InfoActivity = () => (
         onPress={() => { Linking.openURL('https://twitter.com/rashi25k'); }}
       />
       <SocialIcon
-        title="Help us keep it running"
+        title="Privacy Policy"
         button
-        type='paypal'
         style={{
           padding: 16,
           margin: 24,
           backgroundColor: '#003087',
           borderRadius: 8
         }}
-        onPress={() => { Linking.openURL('https://www.paypal.me/rashikaranpuria/1'); }}
+        onPress={() => { Linking.openURL('https://sites.google.com/view/tell-me-a-secret-privacypolicy/home'); }}
       />
     </View>
   );
